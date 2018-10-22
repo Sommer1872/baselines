@@ -15,6 +15,8 @@ from importlib import import_module
 from baselines.common.vec_env.vec_normalize import VecNormalize
 from baselines.common import atari_wrappers, retro_wrappers
 
+import baselines.crypto_trading_env.envs
+
 try:
     from mpi4py import MPI
 except ImportError:
@@ -139,6 +141,8 @@ def get_env_type(env_id):
     if env_id in _game_envs.keys():
         env_type = env_id
         env_id = [g for g in _game_envs[env_type]][0]
+    elif env_id.startswith('crypto'):
+        env_type = 'classic_control'
     else:
         env_type = None
         for g, e in _game_envs.items():
